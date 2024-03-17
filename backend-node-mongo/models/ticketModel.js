@@ -19,6 +19,7 @@ const ticketSchema = new mongoose.Schema(
                 "Apple Watch",
                 "Apple Vision Pro",
                 "Air Pods",
+                "MacBook Air",
             ],
         },
         description: {

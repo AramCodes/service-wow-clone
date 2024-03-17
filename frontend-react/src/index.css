@@ -390,6 +390,23 @@ footer {
     }
 }
 
+.service {
+    font-size: 1.25rem;
+    font-weight: 600;
+}
+
+.green-O {
+    color: #32cd32;
+}
+
+.salutation {
+    margin-right: 150px;
+}
+
+.salutation span {
+    color: #32cd32;
+}
+
 @media (max-width: 600px) {
     .boxes {
         grid-template-columns: 1fr;
@@ -409,11 +426,8 @@ footer {
     }
 }
 
-.service {
-    font-size: 1.25rem;
-    font-weight: 600;
-}
-
-.green-O {
-    color: #32cd32;
+@media (max-width: 650px) {
+    .salutation {
+        margin-right: 0;
+    }
 }

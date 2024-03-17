@@ -8,6 +8,8 @@ function Header() {
     const dispatch = useDispatch();
     const { user } = useSelector((state) => state.auth);
 
+    // console.log(user);
+
     const onLogout = () => {
         dispatch(logout());
         navigate("/");
@@ -35,11 +37,17 @@ function Header() {
                         </li>
                     </>
                 ) : (
-                    <li>
-                        <button className="btn" onClick={onLogout}>
-                            <FaSignOutAlt /> Logout
-                        </button>
-                    </li>
+                    <>
+                        <h4 className="salutation">
+                            Welcome Back, <span>{user.name.split(" ")[0]}</span>
+                        </h4>
+
+                        <li>
+                            <button className="btn" onClick={onLogout}>
+                                <FaSignOutAlt /> Logout
+                            </button>
+                        </li>
+                    </>
                 )}
             </ul>
         </header>

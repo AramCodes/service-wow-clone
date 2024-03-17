@@ -1,5 +1,5 @@
 const express = require("express");
-var cors = require("cors"); // Middleware for Cross Origin Resource Sharing
+var cors = require("cors"); // Middleware for Cross Origin Resource Sharing remove in production
 const colors = require("colors");
 const dotenv = require("dotenv").config();
 const { errorHandler } = require("./middleware/errorMiddleware");
@@ -7,7 +7,7 @@ const connectDB = require("./config/db");
 const port = process.env.PORT || 8000;
 const app = express();
 
-app.use(cors()); //CORS Middleware
+app.use(cors()); //CORS Middleware remove in production
 
 // Connects to the database
 connectDB();
