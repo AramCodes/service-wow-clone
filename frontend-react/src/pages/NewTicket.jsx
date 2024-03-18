@@ -1,19 +1,34 @@
 import { useState } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import { createTicket } from "../features/tickets/ticketSlice";
+import BackButton from "../components/BackButton";
 
 const NewTicket = () => {
     const { user } = useSelector((state) => state.auth);
     const [name] = useState(user.name);
     const [email] = useState(user.email);
-    const [product, setProduct] = useState("iphone");
+    const [product, setProduct] = useState("iPhone");
     const [description, setDescription] = useState("");
+
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const onSubmit = (e) => {
         e.preventDefault();
+        dispatch(createTicket({ product, description }))
+            .unwrap()
+            .then(() => {
+                navigate("/tickets");
+                toast.success("New ticket created!");
+            })
+            .catch(toast.error);
     };
 
     return (
         <>
+            <BackButton />
             <section className="heading">
                 <h1>Create a New Ticket</h1>
                 <p>Please fill out the form below</p>
@@ -23,13 +38,15 @@ const NewTicket = () => {
                 <div className="form-group">
                     <label htmlFor="name">Customer&apos;s Name</label>
                     <input
+                        id="name"
                         type="text"
                         className="form-control"
                         value={name}
                         disabled
                     />
-                    <label htmlFor="name">Customer&apos;s Email</label>
+                    <label htmlFor="email">Customer&apos;s Email</label>
                     <input
+                        id="email"
                         type="email"
                         className="form-control"
                         value={email}
