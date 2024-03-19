@@ -4,15 +4,16 @@ import Modal from "react-modal";
 import { FaPlus } from "react-icons/fa";
 import { useSelector, useDispatch } from "react-redux";
 import { getTicket, closeTicket } from "../features/tickets/ticketSlice";
-// import { getNotes, createNote } from "../features/notes/noteSlice";
+import { getNotes, createNote } from "../features/notes/noteSlice";
 import { useParams, useNavigate } from "react-router-dom";
 import BackButton from "../components/BackButton";
 import Spinner from "../components/Spinner";
-// import NoteItem from "../components/NoteItem";
+import NoteItem from "../components/NoteItem";
 
 const customStyles = {
     content: {
-        width: "600px",
+        height: "300px",
+        width: "500px",
         top: "50%",
         left: "50%",
         right: "auto",
@@ -41,7 +42,7 @@ function Ticket() {
         dispatch(getNotes(ticketId)).unwrap().catch(toast.error);
     }, [ticketId, dispatch]);
 
-    // Close ticket
+    // Closes a ticket
     const onTicketClose = () => {
         dispatch(closeTicket(ticketId))
             .unwrap()
@@ -52,7 +53,7 @@ function Ticket() {
             .catch(toast.error);
     };
 
-    // Create note submit
+    // Creates note
     const onNoteSubmit = (e) => {
         e.preventDefault();
         dispatch(createNote({ noteText, ticketId }))

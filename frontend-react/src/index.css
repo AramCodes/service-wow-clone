@@ -431,3 +431,7 @@ footer {
         margin-right: 0;
     }
 }
+
+textarea {
+    resize: none;
+}

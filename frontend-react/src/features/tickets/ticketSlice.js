@@ -33,7 +33,7 @@ export const getTickets = createAsyncThunk(
     }
 );
 
-// Get user ticket
+// Get user's ticket
 export const getTicket = createAsyncThunk(
     "tickets/get",
     async (ticketId, thunkAPI) => {
