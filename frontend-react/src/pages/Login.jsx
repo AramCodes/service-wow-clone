@@ -1,12 +1,13 @@
 import { useState } from "react";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-import { FaSignInAlt } from "react-icons/fa";
+import { FaSignInAlt, FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 import { useSelector, useDispatch } from "react-redux";
 import { login } from "../features/auth/authSlice";
 import Spinner from "../components/Spinner";
 
 function Login() {
+    const [passwordIsRevealed, setPasswordIsRevealed] = useState(false);
     const [formData, setFormData] = useState({
         email: "",
         password: "",
@@ -37,9 +38,6 @@ function Login() {
         dispatch(login(userData))
             .unwrap()
             .then((user) => {
-                // NOTE: by unwrapping the AsyncThunkAction we can navigate the user after
-                // getting a good response from our API or catch the AsyncThunkAction
-                // rejection to show an error message
                 toast.success(`Logged in as ${user.name}`);
                 navigate("/");
             })
@@ -73,9 +71,9 @@ function Login() {
                             required
                         />
                     </div>
-                    <div className="form-group">
+                    <div className="form-group input-with-icon">
                         <input
-                            type="password"
+                            type={passwordIsRevealed ? "text" : "password"}
                             className="form-control"
                             id="password"
                             name="password"
@@ -84,6 +82,21 @@ function Login() {
                             placeholder="Enter password"
                             required
                         />
+                        {passwordIsRevealed ? (
+                            <span
+                                className="icon-span"
+                                onClick={() => setPasswordIsRevealed(false)}
+                            >
+                                <FaRegEyeSlash size={26} className="icons" />
+                            </span>
+                        ) : (
+                            <span
+                                className="icon-span"
+                                onClick={() => setPasswordIsRevealed(true)}
+                            >
+                                <FaRegEye size={26} className="icons" />
+                            </span>
+                        )}
                     </div>
                     <div className="form-group">
                         <button className="btn btn-block">Submit</button>

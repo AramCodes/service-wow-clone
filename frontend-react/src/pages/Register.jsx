@@ -1,12 +1,16 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { FaUser } from "react-icons/fa";
+import { FaUser, FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 import { useSelector, useDispatch } from "react-redux";
 import { register } from "../features/auth/authSlice";
 import Spinner from "../components/Spinner";
+import PasswordValidationTracker from "../components/PasswordValidationTracker";
 
 function Register() {
+    const [passwordIsRevealed, setPasswordIsRevealed] = useState(false);
+    const [passwordConfirmIsRevealed, setPasswordConfirmIsRevealed] =
+        useState(false);
     const [formData, setFormData] = useState({
         name: "",
         email: "",
@@ -14,6 +18,12 @@ function Register() {
         password2: "",
     });
 
+    // validation cases
+    const [lowercase, setLowercase] = useState(false);
+    const [uppercase, setUppercase] = useState(false);
+    const [number, setNumber] = useState(false);
+    const [symbol, setSymbol] = useState(false);
+    const [characters, setCharacters] = useState(false);
     const { name, email, password, password2 } = formData;
 
     const dispatch = useDispatch();
@@ -26,13 +36,28 @@ function Register() {
             ...prevState,
             [e.target.name]: e.target.value,
         }));
+
+        validateEntry(e.target.value);
     };
 
-    // NOTE: no need for useEffect here as we can catch the
-    // AsyncThunkAction rejection in our onSubmit or redirect them on the
-    // resolution
-    // Side effects shoulld go in event handlers where possible
-    // source: - https://beta.reactjs.org/learn/keeping-components-pure#where-you-can-cause-side-effects
+    const validateEntry = (entry) => {
+        const lower = new RegExp("(?=.*[a-z])");
+        const upper = new RegExp("(?=.*[A-Z])");
+        const number = new RegExp("(?=.*[0-9])");
+        const special = new RegExp("(?=.*[!@#$%^&*])");
+        const length = new RegExp("(?=.{8,})");
+
+        // validate lowercase
+        lower.test(entry) ? setLowercase(true) : setLowercase(false);
+        // validate uppercase
+        upper.test(entry) ? setUppercase(true) : setUppercase(false);
+        // validate number
+        number.test(entry) ? setNumber(true) : setNumber(false);
+        // validate symbol
+        special.test(entry) ? setSymbol(true) : setSymbol(false);
+        // validate length
+        length.test(entry) ? setCharacters(true) : setCharacters(false);
+    };
 
     const onSubmit = (e) => {
         e.preventDefault();
@@ -49,9 +74,6 @@ function Register() {
             dispatch(register(userData))
                 .unwrap()
                 .then((user) => {
-                    // NOTE: by unwrapping the AsyncThunkAction we can navigate the user after
-                    // getting a good response from our API or catch the AsyncThunkAction
-                    // rejection to show an error message
                     toast.success(`Registered new user - ${user.name}`);
                     navigate("/");
                 })
@@ -98,9 +120,9 @@ function Register() {
                             required
                         />
                     </div>
-                    <div className="form-group">
+                    <div className="form-group input-with-icon">
                         <input
-                            type="password"
+                            type={passwordIsRevealed ? "text" : "password"}
                             className="form-control"
                             id="password"
                             name="password"
@@ -109,10 +131,27 @@ function Register() {
                             placeholder="Enter password"
                             required
                         />
+                        {passwordIsRevealed ? (
+                            <span
+                                className="icon-span"
+                                onClick={() => setPasswordIsRevealed(false)}
+                            >
+                                <FaRegEyeSlash size={26} className="icons" />
+                            </span>
+                        ) : (
+                            <span
+                                className="icon-span"
+                                onClick={() => setPasswordIsRevealed(true)}
+                            >
+                                <FaRegEye size={26} className="icons" />
+                            </span>
+                        )}
                     </div>
-                    <div className="form-group">
+                    <div className="form-group input-with-icon">
                         <input
-                            type="password"
+                            type={
+                                passwordConfirmIsRevealed ? "text" : "password"
+                            }
                             className="form-control"
                             id="password2"
                             name="password2"
@@ -121,7 +160,33 @@ function Register() {
                             placeholder="Confirm password"
                             required
                         />
+                        {passwordConfirmIsRevealed ? (
+                            <span
+                                className="icon-span"
+                                onClick={() =>
+                                    setPasswordConfirmIsRevealed(false)
+                                }
+                            >
+                                <FaRegEyeSlash size={26} className="icons" />
+                            </span>
+                        ) : (
+                            <span
+                                className="icon-span"
+                                onClick={() =>
+                                    setPasswordConfirmIsRevealed(true)
+                                }
+                            >
+                                <FaRegEye size={26} className="icons" />
+                            </span>
+                        )}
                     </div>
+                    <PasswordValidationTracker
+                        lowercase={lowercase}
+                        uppercase={uppercase}
+                        number={number}
+                        symbol={symbol}
+                        characters={characters}
+                    />
                     <div className="form-group">
                         <button className="btn btn-block">Submit</button>
                     </div>

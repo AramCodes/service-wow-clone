@@ -435,3 +435,59 @@ footer {
 textarea {
     resize: none;
 }
+
+.input-with-icon {
+    position: relative;
+}
+
+.icons {
+    position: absolute;
+    right: 15px;
+    top: 40%;
+    transform: translateY(-50%);
+}
+
+.icon-span {
+    cursor: pointer;
+}
+
+.tracker-box {
+    background-color: #386489;
+    font-size: 1.1rem;
+    color: #fff;
+    letter-spacing: 0.1;
+    padding: 0.9em;
+    border-radius: 10px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+.tracker-box div {
+    margin: 5px 0;
+}
+
+.tracker-box .validated {
+    color: #32cd32;
+}
+
+.tracker-box .not-validated {
+    color: #fff;
+}
+
+.list-icon {
+    vertical-align: middle;
+    margin: auto 15px;
+    font-size: 1.2rem;
+}
+
+.extra {
+    margin-left: 40px;
+}
+
+.list-icon.green {
+    color: #0f0;
+}
+
+.list-icon.red {
+    color: #e10600;
+}
