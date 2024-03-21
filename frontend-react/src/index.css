@@ -466,6 +466,13 @@ textarea {
     margin: 5px 0;
 }
 
+.tracker-box .validated.form-group,
+.tracker-box .not-validated.form-group {
+    display: flex;
+    justify-content: space-between;
+    margin: 0 15px;
+}
+
 .tracker-box .validated {
     color: #32cd32;
 }
@@ -477,7 +484,7 @@ textarea {
 .list-icon {
     vertical-align: middle;
     margin: auto 15px;
-    font-size: 1.2rem;
+    font-size: 1.25rem;
 }
 
 .extra {

@@ -37,7 +37,10 @@ function Register() {
             [e.target.name]: e.target.value,
         }));
 
-        validateEntry(e.target.value);
+        //conditional to prevent password validation on confirm since password must = passwordConfirm
+        if (e.target.name === "password") {
+            validateEntry(e.target.value);
+        }
     };
 
     const validateEntry = (entry) => {

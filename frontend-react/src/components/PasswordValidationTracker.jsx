@@ -67,7 +67,7 @@ const PasswordValidationTracker = (props) => {
                         : "not-validated form-group"
                 }
             >
-                Password needs at least one symbol
+                Password needs at least one symbol (!@#$%^&*)
                 {props.symbol ? (
                     <span className="list-icon green extra">
                         <IoCheckmarkCircleOutline />
